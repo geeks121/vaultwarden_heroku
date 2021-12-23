@@ -8,8 +8,8 @@ CREATE_APP_NAME=" "
 ENABLE_AUTOBUS_BACKUP=0
 ENABLE_DUO=0
 GIT_HASH="main"
-USE_PSQL=0
-HEROKU_VERIFIED=1
+USE_PSQL=1
+HEROKU_VERIFIED=0
 OFFSITE_HEROKU_DB=" "
 STRATEGY_TYPE="deploy"
 
@@ -47,17 +47,8 @@ function heroku_bootstrap {
         check_addons
     else
         if [ "${HEROKU_VERIFIED}" -eq "1" ]
+        
         then
-            echo "We will use JawsDB Maria edition, which is free and sufficient for a small instance"
-            heroku addons:create jawsdb -a "$APP_NAME"
-        
-            echo "Checking for additional addons"
-            check_addons
-        
-            echo "Now we use the JAWS DB config as the database URL for Bitwarden"
-            echo "Supressing output due to sensitive nature."
-            heroku config:set DATABASE_URL="$(heroku config:get JAWSDB_URL -a "${APP_NAME}")" -a "${APP_NAME}" > /dev/null
-        else
             heroku config:set DATABASE_URL="${OFFSITE_HEROKU_DB}" -a "${APP_NAME}" > /dev/null
         fi
     fi
