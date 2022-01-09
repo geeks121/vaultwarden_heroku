@@ -10,6 +10,7 @@ env:
   CREATE_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
   DUO_ENABLE: 1
   GIT_HASH: main
+  OFFSITE_HEROKU_DB: ${{ secrets.OFFSITE_HEROKU_DB }}
   HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
   HEROKU_VERIFIED: 0
 
